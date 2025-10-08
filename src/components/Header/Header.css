@@ -1,0 +1,31 @@
+header {
+    background-color: white;
+    padding: 12px 0;
+    box-shadow: 1px 2px 4px #d2d2d3;
+}
+
+.header__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header__user,
+.header__balance {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.header__user span,
+.header__balance span {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+
+.header__user svg,
+.header__balance svg {
+    width: 32px;
+    height: 32px;
+}

@@ -1,0 +1,32 @@
+.menu {
+    background-color: white;
+    padding: 12px 0;
+    position: fixed;
+    left: 50%;
+    bottom: 12px;
+    width: 100%;
+    max-width: 320px;
+    transform: translateX(-50%);
+    border-radius: 10px;
+}
+
+.menu__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.menu-icon {
+    transition: all 0.2s;
+}
+
+.menu-icon:hover {
+    transform: translateY(-2px);
+}
+
+.menu-icon svg {
+    color: black;
+    width: 36px;
+    height: 36px;
+}
