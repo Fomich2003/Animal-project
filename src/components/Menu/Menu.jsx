@@ -1,6 +1,6 @@
 import "./Menu.css"
 import { House, Store, Handbag} from "lucide-react"
-
+import { Link } from "react-router-dom"
 
 const Menu = () => {
 
@@ -9,15 +9,15 @@ const Menu = () => {
         <nav className="menu">
             <div className="container">
                 <div className="menu__wrapper">
-                    <a href="/" className="menu-icon">
+                    <Link to="/" className="menu-icon">
                         <House />
-                    </a>
-                    <a href="/store" className="menu-icon">
+                    </Link>
+                    <Link to="/store" className="menu-icon">
                         <Store />
-                    </a>
-                    <a href="/inventory" className="menu-icon">
+                    </Link>
+                    <Link to="/inventory" className="menu-icon">
                         <Handbag />
-                    </a>
+                    </Link>
                 </div>
             </div>
         </nav>
