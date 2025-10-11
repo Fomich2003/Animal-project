@@ -163,6 +163,9 @@
   .animal-card {
     border: 10px;
   }
+  .animal-image {
+    height: 110px;
+  }
   .animal-image img {
     height: 110px;
   }
@@ -173,6 +176,7 @@
 
   .animal-name {
     font-size: 1rem;
+    height: 37px;
   }
 
   .buy-btn {
@@ -187,6 +191,7 @@
 
   .stat {
     font-size: 0.7rem;
+    gap: 4px;
   }
 
   .power svg,
@@ -197,5 +202,8 @@
 
   .animal-footer {
     margin: 0;
+  }
+  .animal-card:hover {
+    transform: none;
   }
 }
