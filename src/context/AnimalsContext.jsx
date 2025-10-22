@@ -32,6 +32,6 @@ const AnimalsProvider = ({ children }) => {
     );
 };
 
-AnimalsProvider.Context=AnimalsContext
+AnimalsProvider.Context = AnimalsContext
 export const useAnimalContext = () => useContext(AnimalsContext);
 export default AnimalsProvider

@@ -26,16 +26,15 @@ const UserProvider = ({ children }) => {
         }
         setIsLoading(false)
     }, [])
-
     useEffect(() => {
         if (!user) return
         updateBalance()
     }, [user])
 
     function updateBalance() {
-        if (checkCookie("balance")) return 
+        if (checkCookie("balance")) return
         saveCoockie("balance", "true", "86400")
-        localStorage.setItem("user", JSON.stringify({...user, balance: user.balance + 15} ))
+        localStorage.setItem("user", JSON.stringify({ ...user, balance: user.balance + 15 }))
         setUser(prev => {
             console.log(prev)
             return {
@@ -45,30 +44,57 @@ const UserProvider = ({ children }) => {
     }
 
     function buyAnimal(animal) {
-        if(animal.price > user.balance) {
+        if (animal.price > user.balance) {
             return {
                 status: false,
                 message: "У вас недостатньо грошей"
             }
         }
 
-        setUser(prev => ({...prev, balance: prev.balance - animal.price}))
+        const updatedAnimals = [...userAnimals, animal]
 
-        setUserAnimals(prev => ([...prev, animal]))
-        localStorage.setItem("user", JSON.stringify(user))
-         return {
-                status: true,
-                message: "Успішна покупка!"
+        localStorage.setItem("user", JSON.stringify({ ...user, myAnimals: updatedAnimals, balance: user.balance - animal.price }))
+
+        setUser(prev => ({ ...prev, balance: prev.balance - animal.price }))
+
+        setUserAnimals(updatedAnimals)
+        return {
+            status: true,
+            message: "Успішна покупка!"
+        }
+    }
+
+    function sellAnimal(animal) {
+        const exAnimal = userAnimals.find(el => el.name === animal.name)
+
+        if (!exAnimal) {
+            return {
+                status: false,
+                message: "Ви не можете здійснити продажу"
             }
+        }
+
+        const updatedAnimals = userAnimals.filter(el => el.name !== animal.name)
+
+        localStorage.setItem("user", JSON.stringify({ ...user, myAnimals: updatedAnimals, balance: user.balance + animal.price }))
+
+        setUser(prev => ({ ...prev, balance: prev.balance + animal.price }))
+
+
+        setUserAnimals(updatedAnimals)
+        return {
+            status: true,
+            message: "Продажа успішна!"
+        }
     }
 
     return (
-        <UserContext.Provider value={{ user, isLoadingUser, userAnimals, buyAnimal }}>
+        <UserContext.Provider value={{ user, isLoadingUser, userAnimals, buyAnimal, sellAnimal }}>
             {children}
         </UserContext.Provider>
     );
 };
 
-UserProvider.Context=UserContext
-export const useUserContext= () => useContext(UserProvider.Context)
+UserProvider.Context = UserContext
+export const useUserContext = () => useContext(UserProvider.Context)
 export default UserProvider
