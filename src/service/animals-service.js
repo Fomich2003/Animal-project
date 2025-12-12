@@ -3,7 +3,6 @@ import animalsConfig from "../config/animals-config";
 class AnimalsService {
     constructor() {
         this.url = animalsConfig.apiUrl
-        this.key = animalsConfig.apiKey
     }
 
     async getAllAnimals() {

@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { saveCoockie, checkCookie } from "../utils/helpers";
+import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
 
@@ -7,6 +8,7 @@ const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isLoadingUser, setIsLoading] = useState(true);
     const [userAnimals, setUserAnimals] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         const exUser = localStorage.getItem("user")
@@ -14,15 +16,16 @@ const UserProvider = ({ children }) => {
             setUser(JSON.parse(exUser))
             setUserAnimals(JSON.parse(exUser).myAnimals)
         } else {
-            const newUser = {
-                id: Date.now(),
-                nick: "Dima",
-                balance: 0,
-                myAnimals: []
-            }
-            setUser(newUser)
-            setUserAnimals(newUser.myAnimals)
-            localStorage.setItem("user", JSON.stringify(newUser))
+            navigate("/register")
+            // const newUser = {
+            //     id: Date.now(),
+            //     nick: "Dima",
+            //     balance: 0,
+            //     myAnimals: []
+            // }
+            // setUser(newUser)
+            // setUserAnimals(newUser.myAnimals)
+            // localStorage.setItem("user", JSON.stringify(newUser))
         }
         setIsLoading(false)
     }, [])
@@ -51,7 +54,7 @@ const UserProvider = ({ children }) => {
             }
         }
 
-        const updatedAnimals = [...userAnimals, animal]
+        const updatedAnimals = [...userAnimals, { ...animal, price: Math.round(animal.price * 0.9) }]
 
         localStorage.setItem("user", JSON.stringify({ ...user, myAnimals: updatedAnimals, balance: user.balance - animal.price }))
 

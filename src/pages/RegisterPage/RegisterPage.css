@@ -1,0 +1,102 @@
+main {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f9f9f9, #eef3f6);
+    font-family: "Poppins", sans-serif;
+    color: #333;
+}
+
+.register {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+}
+
+.register__wrapper {
+    background: #ffffff;
+    border: 1px solid #e3e8ee;
+    border-radius: 16px;
+    padding: 40px 35px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.06);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.register__wrapper:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 170, 255, 0.15);
+}
+
+.register__wrapper h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #0099cc;
+    font-weight: 600;
+}
+
+.register__wrapper p {
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+    color: #666;
+}
+
+.register__wrapper form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.register__wrapper input {
+    padding: 12px 15px;
+    border: 1px solid #ccd6dd;
+    border-radius: 10px;
+    background: #f7f9fb;
+    color: #333;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.register__wrapper input::placeholder {
+    color: #999;
+}
+
+.register__wrapper input:focus {
+    outline: none;
+    background: #ffffff;
+    border-color: #00b4d8;
+    box-shadow: 0 0 0 3px rgba(0, 180, 216, 0.15);
+}
+
+.register__wrapper button {
+    padding: 12px;
+    background: linear-gradient(90deg, #00b4d8, #90e0ef);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.register__wrapper button:hover {
+    background: linear-gradient(90deg, #0096c7, #48cae4);
+    transform: scale(1.03);
+    box-shadow: 0 4px 15px rgba(0, 180, 216, 0.3);
+}
+
+@media (max-width: 480px) {
+    .register__wrapper {
+        padding: 30px 25px;
+    }
+
+    .register__wrapper h1 {
+        font-size: 1.6rem;
+    }
+
+    .register__wrapper p {
+        font-size: 0.9rem;
+    }
+}

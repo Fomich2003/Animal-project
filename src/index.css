@@ -16,3 +16,8 @@ body {
   margin: 0 auto;
   padding: 0 12px;
 }
+
+main {
+    padding-bottom: 40px;
+    padding-top: 50px;
+}
