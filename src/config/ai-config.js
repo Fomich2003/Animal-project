@@ -1,7 +1,6 @@
 const aiConfig = {
     stablehorde: {
-        apiUrl: "https://stablehorde.net/api/v2/generate/",
-        apiKey: import.meta.env.STABLEHORDE_SECRET_KEY,
+        apiUrl: "/api/stablehorde-api",
         model: ['526Mix-Animated']
     }
 }
