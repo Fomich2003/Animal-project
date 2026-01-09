@@ -15,6 +15,7 @@ import { generateRandomNumber } from "../utils/helpers";
 class Animal {
     constructor(personalAnimalName, ownerName) {
         this.name = this.generateName(personalAnimalName)
+        this.promptTemplate = ""
         this.description = this.generateDescription(personalAnimalName)
         this.power = this.generateStat("power")
         this.hitpoints = this.generateStat("hitpoints")
@@ -26,13 +27,18 @@ class Animal {
     generateName(personalName) {
         const { firstNames, lastNames } = animalsConfig
         const firstName = firstNames[generateRandomNumber(0, firstNames.length - 1)]
-        const lastName = lastNames[generateRandomNumber(0, firstNames.length - 1)]
+        const lastName = lastNames[generateRandomNumber(0, lastNames.length - 1)]
         return `${firstName} ${lastName} (${personalName})`
     }
 
     generateDescription(personalName) {
-        const { descTemplates } = animalsConfig
-        const template = descTemplates[generateRandomNumber(0, descTemplates.length - 1)]
+        const { descTemplates, prompts } = animalsConfig
+        console.log(prompts)
+        const randomNumber = generateRandomNumber(0, descTemplates.length - 1)
+        console.log(randomNumber)
+        const template = descTemplates[randomNumber]
+        this.promptTemplate = prompts[randomNumber]
+        console.log(prompts[randomNumber])
         return template.replace("{{name}}", personalName)
     }
 

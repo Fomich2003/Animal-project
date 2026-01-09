@@ -17,15 +17,6 @@ const UserProvider = ({ children }) => {
             setUserAnimals(JSON.parse(exUser).myAnimals)
         } else {
             navigate("/register")
-            // const newUser = {
-            //     id: Date.now(),
-            //     nick: "Dima",
-            //     balance: 0,
-            //     myAnimals: []
-            // }
-            // setUser(newUser)
-            // setUserAnimals(newUser.myAnimals)
-            // localStorage.setItem("user", JSON.stringify(newUser))
         }
         setIsLoading(false)
     }, [])
@@ -92,7 +83,7 @@ const UserProvider = ({ children }) => {
     }
 
     return (
-        <UserContext.Provider value={{ user, isLoadingUser, userAnimals, buyAnimal, sellAnimal }}>
+        <UserContext.Provider value={{ user, isLoadingUser, userAnimals, buyAnimal, sellAnimal, setUser, setUserAnimals }}>
             {children}
         </UserContext.Provider>
     );

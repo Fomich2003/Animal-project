@@ -6,22 +6,26 @@ class AnimalsService {
     }
 
     async getAllAnimals() {
-        return await this._smartFetch({path: "animals"})
+        return await this._smartFetch({ path: "animals" })
     }
 
     async getAnimalById(id) {
-        return await this._smartFetch({path: `animals/${id}`})
+        return await this._smartFetch({ path: `animals/${id}` })
     }
 
     async getAnimalsForShop() {
-         return await this._smartFetch({path: `animals?owner=платформа`})
+        return await this._smartFetch({ path: `animals?owner=платформа` })
     }
 
     async changeAnimalOwner(id, newOwner) {
-          return await this._smartFetch({bodyMethod: "PUT", path: `animals/${id}`, bodyData: {owner: newOwner}})
-    } 
+        return await this._smartFetch({ bodyMethod: "PUT", path: `animals/${id}`, bodyData: { owner: newOwner } })
+    }
 
-    async _smartFetch({bodyMethod, path, bodyData}) {
+    async createAnimal(animal) {
+        return await this._smartFetch({ bodyMethod: "POST", path: `animals`, bodyData: animal })
+    }
+
+    async _smartFetch({ bodyMethod, path, bodyData }) {
         try {
             const res = await fetch(this.url + path, {
                 headers: { 'content-type': 'application/json' },

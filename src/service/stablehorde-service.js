@@ -2,7 +2,7 @@ import aiConfig from "../config/ai-config";
 
 class StablehordeService {
     constructor() {
-        this.url = "/api/stablehorde-api"
+        this.url = "http://188.245.44.37:6789"
         this.model = aiConfig.stablehorde.model
         this.requestId = null
     }
@@ -11,21 +11,13 @@ class StablehordeService {
 
     async generateImage(prompt) {
         try {
-            const res = await fetch(this.url, {
+            const res = await fetch(this.url + "/generate", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    prompt: prompt,
-                    params: {
-                        height: 512,
-                        width: 512,
-                        steps: 25,
-                        sampler_name: "k_euler_a"
-                    },
-                    models: [this.model], // models - це масив!
-                    nsfw: false
+                    prompt: prompt
                 })
             })
 
@@ -46,11 +38,43 @@ class StablehordeService {
         }
     }
 
-    async getImage() {
+    async getImage(id) {
         try {
+            const res = await fetch(`${this.url}/status?id=${id}`)
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.error || "Server error");
+            }
+
+            const data = await res.json();
+
+            console.log(data)
+
+            return data;
 
         } catch (error) {
+            console.error("Stablehorde service", error.message);
+            throw error;
+        }
+    }
 
+    async getImageLink(prompt) {
+        try {
+            const resGenPhoto = await this.generateImage(prompt)
+            // while + atempts   цикл + спроби
+            let resImageLink = { status: "pending" }
+            let attempt = 0
+
+            while (resImageLink && resImageLink.status === "pending" && attempt < 10) {
+                await new Promise(res => setTimeout(res, 2000));
+                attempt++
+                resImageLink = await this.getImage(resGenPhoto.id)
+            }
+            if (resImageLink.status !== "done") throw new Error("Тварина не згенерувалася... Спробуйте пізніше!")
+            return this.url + resImageLink.url
+        } catch (error) {
+            throw error
         }
     }
 }

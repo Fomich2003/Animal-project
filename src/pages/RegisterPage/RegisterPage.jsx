@@ -2,24 +2,50 @@ import "./RegisterPage.css"
 import { useState } from "react"
 import Animal from "../../service/animal"
 import stablehordeService from "../../service/stablehorde-service"
+import animalsService from "../../service/animals-service"
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../context/UserContext"
 
 function RegisterPage() {
     const [ownerName, setOwnerName] = useState("")
     const [animalName, setAnimalName] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
+    const [isError, setIsError] = useState(null)
+    const { setUser, setUserAnimals } = useUserContext()
+    const navigate = useNavigate()
 
     const createAccount = (e) => {
         e.preventDefault()
+        setIsLoading(true)
         const animal = new Animal(animalName, ownerName)
-        console.log(animal)
-        const prompt = "A cute cartoon cat with blue scales, fluffy wings, and a friendly smile, sitting on a pile of golden coins, cartoonish style, vibrant colors"
-        stablehordeService.generateImage(prompt).then(res => {
-            console.log(res)
+
+        stablehordeService.getImageLink(animal.promptTemplate).then(url => {
+            animal.photo = url
+            return animal
+        }).then(animal => {
+            return animalsService.createAnimal(animal)
+        }).then(result => {
+            if (!result.status) throw new Error("При зберіганні тваринки відбулась помилка!")
+            const newUser = {
+                id: Date.now(),
+                nick: result.data.owner,
+                balance: 100,
+                myAnimals: [result.data]
+            }
+            setUser(newUser)
+            setUserAnimals(newUser.myAnimals)
+            localStorage.setItem("user", JSON.stringify(newUser))
+            navigate("/inventory")
+        }).catch(er => {
+            setIsError(er.message)
+        }).finally(() => {
+            setIsLoading(false)
         })
     }
 
 
     return (
-        <main>
+        <main className="registerMain">
             <section className="register">
                 <div className="container">
                     <div className="register__wrapper">
@@ -42,7 +68,8 @@ function RegisterPage() {
                                 onChange={(e) => setAnimalName(e.target.value)}
                                 required
                             />
-                            <button>Створити акаунт</button>
+                            {isError && <p style={{ color: "red" }}>{isError}</p>}
+                            <button disabled={isLoading}>{isLoading ? <img width={200} height={200} src="/icons/Loader.png" alt="Loading..." /> : "Створити акаунт"}</button>
                         </form>
                     </div>
                 </div>
