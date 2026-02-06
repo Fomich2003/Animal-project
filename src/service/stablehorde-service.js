@@ -2,7 +2,7 @@ import aiConfig from "../config/ai-config";
 
 class StablehordeService {
     constructor() {
-        this.url = "http://188.245.44.37:6789"
+        this.url = "https://stablehorde.fomka.online"
         this.model = aiConfig.stablehorde.model
         this.requestId = null
     }
